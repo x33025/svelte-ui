@@ -1,0 +1,85 @@
+/* Font Faces */
+
+@font-face {
+    font-family: 'Nunito';
+    src: url('/src/fonts/Nunito-VariableFont_wght.ttf') format('truetype');
+    font-weight: 200 1000;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Inter';
+    src: url('/src/fonts/Inter-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Noto Serif';
+    src: url('/src/fonts/NotoSerifDisplay-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+
+
+  @font-face {
+    font-family: 'Kode Mono';
+    src: url('/src/fonts/KodeMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Sono';
+    src: url('/src/fonts/Sono-VariableFont_MONO,wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+  }
+
+
+  .title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .headline {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+  
+  .subheadline {
+    font-size: 1.125em;
+    font-weight: normal;
+  }
+  
+  .body {
+    font-size: 1em;
+    font-weight: normal;
+  }
+  
+  .callout {
+    font-size: 0.875em;
+    font-weight: normal;
+  }
+  
+  .caption {
+    font-size: 0.75em;
+    font-weight: normal;
+  }
+
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .bolder {
+    font-weight: bolder;
+  }
+
+  .lighter {
+    font-weight: lighter;
+  }
+
+  .lightest {
+    font-weight: lightest;
+  }

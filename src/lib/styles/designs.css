@@ -1,0 +1,70 @@
+
+
+
+
+
+.neu {
+  background: #ebebeb;
+  box-shadow:  8px 8px 16px #c8c8c8,
+               -8px -8px 16px #ffffff;
+}
+
+.neu-display {
+  background: #ebebeb;
+  box-shadow:  15px 15px 30px #c8c8c8,
+               -15px -15px 30px #ffffff;
+}
+
+.shadow-default {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.073);
+}
+
+.glass {
+  background: rgba( 255, 255, 255, 0.3 );
+backdrop-filter: blur( 10px );
+-webkit-backdrop-filter: blur( 10px );
+border-radius: 1em;
+}
+
+.glass-dark {
+  background: rgba(52, 52, 52, 0.17);
+backdrop-filter: blur( 10px );
+-webkit-backdrop-filter: blur( 10px );
+border-radius: 1em;
+
+}
+
+.border-highlight {
+  border: 1.5px solid var(--gray-2);
+}
+
+
+  
+
+
+
+
+.grid-background {
+  background-image: linear-gradient(#00000020 1px, transparent 1px),
+                    linear-gradient(90deg, #00000020 1px, transparent 1px);
+  background-size: 3.5em 3.5em;
+}
+
+
+.base-item {
+  padding: var(--default-padding);
+  border: 1px solid var(--gray-2);
+  border-radius: 0.5em;
+  transition: border 0.2s ease-in-out;
+}
+
+.base-item:hover {
+  border: 1px solid var(--gray-3);
+}
+
+
+.regular-material {
+  background-color: rgba(212, 212, 212, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}

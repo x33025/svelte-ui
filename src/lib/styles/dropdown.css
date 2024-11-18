@@ -1,0 +1,20 @@
+.dropdown-item {
+    color: black;
+    padding: var(--default-padding);
+    border-radius: 0.5em;
+    transition: background-color 0.2s ease-in-out;
+    width: 100%;
+  }
+
+  .dropdown-item.selected{
+      background-color: var(--gray-1);
+  }
+
+  .dropdown-item.selected:hover {
+      background-color:var(--gray-2);
+  }
+
+
+  .dropdown-item:hover {
+    background-color: var(--gray-1);
+  }

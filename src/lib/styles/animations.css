@@ -1,0 +1,21 @@
+/* Define CSS variables for animation durations and properties */
+:root {
+    --standard-duration: 0.24s;
+    --snappy-duration: 0.13s;
+
+}
+
+/* Default transition timing function for all elements */
+* {
+    transition-timing-function: ease-in-out;
+}
+
+/* Standard Timing for UI Transitions */
+.standard-transition {
+    transition: all var(--standard-duration);
+}
+
+/* Snappy Timing for Bouncy Animations */
+.snappy-transition {
+    transition: all var(--snappy-duration);
+} 

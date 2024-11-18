@@ -1,0 +1,131 @@
+/* Minimal Global Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling */
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Input and Textarea Reset */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+textarea {
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    outline: none;
+    width: inherit;
+    resize: none; /* Prevent resizing */
+    appearance: none;
+}
+
+/* Minimal Button Reset */
+button {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    white-space: nowrap;
+}
+
+/* Heading Sizes */
+h1 {
+    font-size: 2em;
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.17em;
+}
+
+/* Root Variables */
+:root {
+    --small-padding: 0.3em 0.5em;
+    --default-padding: 0.5em 0.7em;
+    --large-padding: 1.5em 2em;
+}
+
+/* Anchor Styling */
+a {
+    text-decoration: none;
+    color: var(--blue);
+}
+
+  
+table {
+    width: 100%;
+    border-collapse: collapse;
+
+}
+
+table, th, td {
+
+    border: 1px solid hsl(0, 0%, 87%);
+}
+
+th, td {
+    padding: 0.5em;
+    text-align: left;
+}
+
+th {
+    background-color: white;
+}
+
+@media (max-width: 600px) {
+  th, td {
+      display: block;
+      width: 100%;
+  }
+}
+
+ul {
+  list-style-type: disc; /* Default bullet style */
+  margin: 1em 0; /* Margin above and below the list */
+  padding-left: 1.5em; /* Indentation from the left */
+}
+
+/* Basic styling for ordered lists */
+ol {
+  list-style-type: decimal; /* Default number style */
+  margin: 1em 0; /* Margin above and below the list */
+  padding-left: 1.5em; /* Indentation from the left */
+}
+
+/* Styling for list items */
+li {
+  margin-bottom: 0.5em; /* Space between list items */
+}
+
+iframe {
+    border-radius: 1em;
+  }
+
+      .code-block {
+        background: #f5f5f5;
+        padding: 1em;
+        border-radius: 0.5em;
+        overflow-x: auto;
+      }
+      
+      code {
+        font-family: monospace;
+        white-space: pre;
+      }
