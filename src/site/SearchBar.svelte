@@ -1,6 +1,6 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
-    import { routes, type Route } from '$lib/local/stores/routes.js';
+    import { routes, type Route } from '$site/stores/routes.js';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
     import DropdownMenu from '$lib/components/dropdown-menu/index.svelte';
@@ -21,10 +21,10 @@
     let componentId = $state('');
 
     $effect(() => {
-
-        componentText = $page.data.components.find((component: any) => component.id === $page.url.pathname.split('/')[2])?.name;
-        componentId = $page.data.components.find((component: any) => component.id === $page.url.pathname.split('/')[2])?.id;
-    })
+        const component = $page.data.components.find((component: any) => component.sha === $page.url.pathname.split('/')[2]);
+        componentText = component?.name;
+        componentId = component?.sha.slice(0, component.sha.length / 2);
+    });
     
 
 </script>
@@ -61,7 +61,7 @@
     {#snippet content()}
         {@render DropdownSearch()}
         {#each $page.data.components as component}
-            <button class="callout bold dropdown-item" onclick={() => {goto(`/components/${component.id}`); closeDropdown()}}>{component.name}</button>
+            <button class="callout bold dropdown-item" onclick={() => {goto(`/components/${component.sha}`); closeDropdown()}}>{component.name}</button>
         {/each}
     {/snippet}
 </DropdownMenu>

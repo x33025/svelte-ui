@@ -1,4 +1,4 @@
-import { routes } from '$lib/local/stores/routes.js';
+import { routes } from '$site/stores/routes.js';
 
 export async function GET({ url }) {
   // Dynamically get the base URL

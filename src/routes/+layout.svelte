@@ -1,9 +1,9 @@
 <script lang="ts">
   import '$lib/styles/index.css';
 
-  import Footer from '$lib/local/Footer.svelte';
+  import Footer from '$site/Footer.svelte';
 
-  import NavigationBar from '$lib/local/NavigationBar.svelte';
+  import NavigationBar from '$site/NavigationBar.svelte';
   import { ContextMenu } from '$lib/index.js';
   import Sidebar from '$lib/components/sidebar/index.svelte';
   import Modal from '$lib/components/modal/index.svelte';

@@ -6,5 +6,11 @@ export default defineConfig({
 	plugins: [
 		sveltekit(), 
 		svelteui()
-	]
+	],
+	resolve: {
+		alias: {
+			$site: '/src/site',
+			$lib: '/src/lib'
+		}
+	}
 });

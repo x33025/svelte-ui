@@ -5,7 +5,7 @@
 
   import LogTracker from '$lib/components/log-tracker/index.svelte';
   import { addLog } from '$lib/index.js';
-  import ComponentRenderer from '$lib/local/workshop/DynamicRenderer.svelte';
+  import ComponentRenderer from '$site/workshop/DynamicRenderer.svelte';
   import { page } from '$app/stores';
   import TextEditor from '$lib/components/text-editor/index.svelte';
 

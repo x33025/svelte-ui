@@ -1,4 +1,4 @@
-import { supabase } from '$lib/local/server/supabase.js';
+import { supabase } from '$site/server/supabase.js';
 import { json } from '@sveltejs/kit';
 
 export const GET = async () => {

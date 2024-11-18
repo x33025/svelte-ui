@@ -11,7 +11,7 @@
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
 
-    import { bentoItems, type BentoItem } from '$lib/local/stores/routes.js';
+    import { bentoItems, type BentoItem } from '$site/stores/routes.js';
 
     let copied = $state(false);
 

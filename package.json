@@ -53,6 +53,7 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
+		"@octokit/rest": "^21.0.2",
 		"@polygon.io/client-js": "^7.3.2",
 		"@supabase/auth-helpers-sveltekit": "^0.13.0",
 		"@supabase/ssr": "^0.5.1",

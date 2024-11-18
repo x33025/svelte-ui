@@ -27,7 +27,7 @@
    
         <h2>{trainToTitleCase(component.name)}</h2>
         <spacer></spacer>
-        <button onclick={() => goto(`/components/${component.id}`)} class="base-item">View</button>
+        <button onclick={() => goto(`/components/${component.sha}`)} class="base-item">View</button>
     </stack>
 
     <p>{component.description}</p>

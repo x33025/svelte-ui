@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ComponentCard from '$lib/local/component/component-card.svelte';
+    import ComponentCard from '$site/component/component-card.svelte';
     import { page } from '$app/stores';
 
 

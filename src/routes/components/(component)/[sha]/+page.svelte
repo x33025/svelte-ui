@@ -3,5 +3,5 @@
 </script>
 
 <stack expand>
-    { $page.data.component.name }
+    { $page.data.componentModule.name }
 </stack>
