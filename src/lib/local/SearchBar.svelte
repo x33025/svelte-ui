@@ -38,7 +38,7 @@
 
         {#snippet content()}
             {#each routes as route}
-                <button class="callout bold dropdown-item {$page.url.pathname === route.path ? 'selected' : ''}" onclick={() => handleRouteClick(route)}>{route.title}</button>
+                <button class="callout bold dropdown-item {$page.url.pathname === route.path ? 'selected' : ''}" onclick={() => handleRouteClick(route)}>{route.title.toLowerCase()}</button>
             {/each}
     {/snippet}
 

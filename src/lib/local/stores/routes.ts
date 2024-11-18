@@ -22,9 +22,16 @@ export const routes: Route[] = [
     { path: '/components', title: 'Components', meta_description: 'A library of reusable UI components.' },
     { path: '/core', title: 'Core', meta_description: 'Standardized CSS and HTML foundations.' },
     { path: '/layout', title: 'Layout', meta_description: 'Simple, flexible layout structures.' },
-    { path: '/style', title: 'Style', meta_description: 'Predefined CSS styles, including colors, typography, and more.' },
-    { path: '/jsonl-editor', title: 'JSONL Editor', meta_description: 'A tool for editing JSONL files.' }
+    { path: '/style', title: 'Style', meta_description: 'Predefined CSS styles, including colors, typography, and more.' }
 ];
+
+// Determine if the environment is local
+const isLocal = window.location.hostname === 'localhost';
+
+// Conditionally add the JSONL Editor route if on a local machine
+if (isLocal) {
+    routes.push({ path: '/jsonl-editor', title: 'JSONL Editor', meta_description: 'A tool for editing JSONL files.' });
+}
 
 // Extract the paths from the routes array to create a type
 type RoutePaths = typeof routes[number]['path'];
@@ -41,7 +48,7 @@ const routeBentoProperties: Record<RoutePaths, { color: string; icon?: Component
 export const bentoItems: BentoItem[] = [
     // Add Bento items based on routes, excluding "Home"
     ...routes
-        .filter(route => route.path !== '/' && route.path !== '/jsonl-editor') // Exclude Home and JSONL Editor
+        .filter(route => route.path !== '/') // Exclude Home
         .map(route => ({
             gridArea: route.path.substring(1) || 'home', // Map the path to a grid area (e.g., 'workshop', 'components')
             title: route.title,
