@@ -25,8 +25,9 @@ export const routes: Route[] = [
     { path: '/style', title: 'Style', meta_description: 'Predefined CSS styles, including colors, typography, and more.' }
 ];
 
-// Determine if the environment is local
-const isLocal = window.location.hostname === 'localhost';
+
+// Check if window is defined to determine if the environment is local
+const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
 
 // Conditionally add the JSONL Editor route if on a local machine
 if (isLocal) {
