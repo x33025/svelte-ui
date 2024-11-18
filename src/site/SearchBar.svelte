@@ -21,7 +21,7 @@
     let componentId = $state('');
 
     $effect(() => {
-        const component = $page.data.components.find((component: any) => component.sha === $page.url.pathname.split('/')[2]);
+        const component = $page.data.components.find((component: any) => component.name === $page.url.pathname.split('/')[2]);
         componentText = component?.name;
         componentId = component?.sha.slice(0, component.sha.length / 2);
     });
@@ -61,7 +61,7 @@
     {#snippet content()}
         {@render DropdownSearch()}
         {#each $page.data.components as component}
-            <button class="callout bold dropdown-item" onclick={() => {goto(`/components/${component.sha}`); closeDropdown()}}>{component.name}</button>
+            <button class="callout bold dropdown-item" onclick={() => {goto(`/components/${component.name}`); closeDropdown()}}>{component.name}</button>
         {/each}
     {/snippet}
 </DropdownMenu>
