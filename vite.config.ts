@@ -1,11 +1,11 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import svelteui from './src/lib/layout/preprocessors/index.js';
+import svelteuiLayout from '$lib/layout/plugins/index.js';
 
 export default defineConfig({
 	plugins: [
 		sveltekit(), 
-		svelteui()
+		svelteuiLayout()
 	],
 	resolve: {
 		alias: {

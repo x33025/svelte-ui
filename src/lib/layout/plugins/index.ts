@@ -5,7 +5,7 @@ import stackPlugin from './stack.js';
 
 
 
-export default function svelteui(): Plugin[] {  
+export default function svelteuiLayout(): Plugin[] {  
     return [
         spacerPlugin(),
         dividerPlugin(),

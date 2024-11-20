@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ComponentCard from '$site/component/component-card.svelte';
+    import ComponentCard from '$site/components/component-card.svelte';
     import { page } from '$app/stores';
 
 
@@ -23,11 +23,11 @@
 </stack>
 
 {#snippet SearchBar()}
-<div class="stack full-width " style="--direction: column; --justify: center; --align: center; height: 375px;">
+<stack full-width style=" --justify: center; --align: center; height: 375px;">
     <spacer ></spacer>
   <input class="search-input regular-material"  type="text" placeholder="Search Components" />
   <spacer ></spacer>
-</div>
+    </stack>
 {/snippet}
 
   

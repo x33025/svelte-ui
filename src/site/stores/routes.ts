@@ -22,7 +22,8 @@ export const routes: Route[] = [
     { path: '/components', title: 'Components', meta_description: 'A library of reusable UI components.' },
     { path: '/core', title: 'Core', meta_description: 'Standardized CSS and HTML foundations.' },
     { path: '/layout', title: 'Layout', meta_description: 'Simple, flexible layout structures.' },
-    { path: '/style', title: 'Style', meta_description: 'Predefined CSS styles, including colors, typography, and more.' }
+    { path: '/style', title: 'Style', meta_description: 'Predefined CSS styles, including colors, typography, and more.' },
+    { path: '/blog', title: 'Blog', meta_description: 'A blog about Svelte UI and web development.' }
 ];
 
 
@@ -43,7 +44,7 @@ const routeBentoProperties: Record<RoutePaths, { color: string; icon?: Component
     '/core': { color: '--cyan', icon: undefined, description: 'Standardized CSS and HTML foundations.' },
     '/layout': { color: '--mint', icon: Layers, description: 'Simple, flexible layout structures.' },
     '/style': { color: '--purple', icon: undefined, description: 'Predefined CSS styles, including colors, typography, and more.' },
-    
+    '/blog': { color: '--orange', icon: undefined, description: 'A blog about Svelte UI and web development.' }
 };
 
 export const bentoItems: BentoItem[] = [

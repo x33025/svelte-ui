@@ -23,6 +23,7 @@
  
 
     {@render children()}
+
     <Footer />
 
 

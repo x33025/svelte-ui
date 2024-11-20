@@ -27,15 +27,7 @@
           document.head.appendChild(style);
         }
 
-        // Dynamically execute the compiled JavaScript code
-        const ComponentConstructor = new Function(`${js.code}; return MyComponent;`)();
 
-        console.log(ComponentConstructor);
-
-        // Render the compiled component into the container
-        componentInstance = new ComponentConstructor({
-          target: container,
-        });
       }
     } catch (err) {
       console.error('Failed to compile or render Svelte source:', err);
