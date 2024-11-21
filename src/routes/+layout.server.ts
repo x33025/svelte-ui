@@ -16,7 +16,7 @@ export const load = async () => {
     // Ensure response.data is an array before filtering
     if (Array.isArray(response.data)) {
       const components = response.data.filter((item: any) => item.type === 'dir');
-      console.log('Fetched component folders:', components.map((component: any) => ({ name: component.name, sha: component.sha }))); // Log the folder names and SHA
+   //   console.log('Fetched component folders:', components.map((component: any) => ({ name: component.name, sha: component.sha }))); // Log the folder names and SHA
       return { components };
     }
   } catch (error) {

@@ -2,6 +2,7 @@
     import { onMount } from 'svelte';
     import { animate, stagger } from 'motion';
     import { goto } from '$app/navigation';
+    import Stack from '$lib/layout/stack.svelte';
 
 
      let { component } = $props<{component: any}>();
@@ -23,12 +24,12 @@
 
 <div  class="component-card" style="--align: flex-start; --justify: flex-start;">
     
-    <stack horizontal>
+    <Stack horizontal>
    
         <h2>{trainToTitleCase(component.name)}</h2>
         <spacer></spacer>
         <button onclick={() => goto(`/components/${component.name}`)} class="base-item">View</button>
-    </stack>
+    </Stack>
 
     <p>{component.description}</p>
 

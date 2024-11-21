@@ -20,9 +20,11 @@
 
 
     <NavigationBar />
- 
 
-    {@render children()}
+
+      {@render children()}
+
+ 
 
     <Footer />
 

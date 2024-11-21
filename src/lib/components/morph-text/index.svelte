@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
+    import Stack from '$lib/layout/stack.svelte';
 
     let { texts, loop = false, delay = 1750, morphSpeed = 21 } = $props<{ 
         texts: string[], 
@@ -91,10 +92,10 @@
     });
 </script>
 
-<stack class="text">{ displayedText }</stack>
+<Stack class="morph-text">{ displayedText }</Stack>
 
 <style>
-    .text {
+    :global(.morph-text) {
         font-size: 0.9em;
         font-weight: bold;
     }

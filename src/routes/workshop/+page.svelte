@@ -8,7 +8,7 @@
   import ComponentRenderer from '$site/workshop/DynamicRenderer.svelte';
   import { page } from '$app/stores';
   import TextEditor from '$lib/components/text-editor/index.svelte';
-
+  import Stack from '$lib/layout/stack.svelte';
 
   let content = $state('<p>Hello</p> <b>World</b> ');
 
@@ -19,13 +19,15 @@
 
   </script>
   
-  <div class="stack expand" style="padding: 1.5em;">
+  <Stack expand style="padding: 1.5em;">
     <TextEditor bind:content />
     <!-- <ComponentRenderer code={$page.data.code}/>
    -->
 
-  </div>
+  </Stack>
   <LogTracker />
+
+
   <style>
 
   </style>

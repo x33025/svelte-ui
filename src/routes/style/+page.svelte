@@ -1,5 +1,7 @@
 <script lang="ts">
 
+    import Stack from '$lib/layout/stack.svelte';
+
 let colors = ['var(--red)', 'var(--pink)', 'var(--orange)', 'var(--yellow)', 'var(--green)', 'var(--mint)', 'var(--teal)', 'var(--cyan)', 'var(--blue)', 'var(--indigo)', 'var(--purple)']
 let grays = ['var(--gray-1)', 'var(--gray-2)', 'var(--gray-3)', 'var(--gray-4)', 'var(--gray-5)', 'var(--gray-6)']
 let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter']
@@ -9,7 +11,7 @@ let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter']
 
 
 
-<stack style="padding: 1.5em;">
+<Stack style="padding: 1.5em;">
 
     <h2>Colors</h2>
     <div class="stack">
@@ -42,7 +44,7 @@ let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter']
 {"function example() {\n  return \"Hello World\";\n}"}
         </code>
     </pre>
-</stack>
+</Stack>
 
 
 {#snippet ColorCard(color: string)}

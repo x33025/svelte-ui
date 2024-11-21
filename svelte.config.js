@@ -17,6 +17,10 @@ const config = {
 			$site: path.resolve('./src/site'),
 			$lib: path.resolve('./src/lib')
 		}
+	},
+
+	compilerOptions: {
+		customElement: true
 	}
 };
 

@@ -1,16 +1,17 @@
 <script lang="ts">
     import ComponentCard from '$site/components/component-card.svelte';
     import { page } from '$app/stores';
+    import Stack from '$lib/layout/stack.svelte';
 
 
       </script>   
     
 
 
-<stack > 
+<Stack > 
   {@render SearchBar()}
 
-    <stack  class="components-grid expand">
+    <Stack  class="components-grid expand">
       {#if $page.data.components}
       {#each $page.data.components as component}
 
@@ -19,15 +20,15 @@
 
       {/each}
       {/if}
-  </stack>
-</stack>
+  </Stack>
+</Stack>
 
 {#snippet SearchBar()}
-<stack full-width style=" --justify: center; --align: center; height: 375px;">
+<Stack full-width style=" --justify: center; --align: center; height: 375px;">
     <spacer ></spacer>
   <input class="search-input regular-material"  type="text" placeholder="Search Components" />
   <spacer ></spacer>
-    </stack>
+    </Stack>
 {/snippet}
 
   

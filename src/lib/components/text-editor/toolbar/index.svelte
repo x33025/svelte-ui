@@ -1,6 +1,7 @@
 <script lang="ts">
     import DropdownMenu from "$lib/components/dropdown-menu/index.svelte";
     import { closeDropdown } from "$lib/index.js";
+    import Stack from "$lib/layout/stack.svelte";
 
     function handleUlist() {
         console.log('ulist');
@@ -23,7 +24,7 @@
     }
 </script>
 
-<stack horizontal style="--gap: 0.5em;">
+<Stack horizontal style="--gap: 0.5em;">
     {@render ToolbarButton('Bold', handleBold)}
     {@render ToolbarButton('Italic', handleItalic)}
     {@render ToolbarButton('Underline', handleUnderline)}
@@ -46,7 +47,7 @@
   
         {/snippet}
     </DropdownMenu>
-</stack>
+</Stack>
 
 {#snippet ToolbarButton(label: string, onclick: () => void)}
     <button class="caption bold toolbar-button" onclick={onclick}>{label}</button>

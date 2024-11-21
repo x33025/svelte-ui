@@ -1,16 +1,16 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import svelteuiLayout from './src/lib/layout/plugins/index.js';
+import { resolve } from 'path';
 
 export default defineConfig({
 	plugins: [
-		sveltekit(), 
-		svelteuiLayout()
+		sveltekit()
+
 	],
 	resolve: {
 		alias: {
-			$site: '/src/site',
-			$lib: '/src/lib'
+			$site: resolve('./src/site'),
+			$lib: resolve('./src/lib')
 		}
 	}
 });
