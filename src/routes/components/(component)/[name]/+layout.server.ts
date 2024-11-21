@@ -1,12 +1,20 @@
 import { octokit } from '$site/server/octokit.js';
 
+type DirectoryContent = {
+  sha?: string;
+  name: string;
+  type: string;
+  path: string;
+  contents?: DirectoryContent[];
+};
+
 export const load = async ({ params }) => {
   const owner = 'x33025'; // Your GitHub username
   const repo = 'svelte-ui'; // The repository name
   const name = params.name; // Capture the component name from the route parameters
   const path = `src/lib/components/${name}`; // Use the component name to construct the path
 
-  const fetchDirectoryContents = async (path: string) => {
+  const fetchDirectoryContents = async (path: string): Promise<DirectoryContent[]> => {
     try {
       const response = await octokit.repos.getContent({
         owner,

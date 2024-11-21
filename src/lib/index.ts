@@ -15,6 +15,9 @@ export { default as LogTracker } from './components/log-tracker/index.svelte';
 export { default as MorphText } from './components/morph-text/index.svelte';
 
 
+export { default as Stack } from './layout/stack.svelte';
+
+
 export { closeDropdown } from './components/dropdown-menu/store.js';
 export { openContextMenu, closeContextMenu } from './components/context-menu/store.js';
 export { openModal, closeModal } from './components/modal/store.js';

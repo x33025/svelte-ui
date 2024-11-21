@@ -1,6 +1,5 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
-    import Stack from '$lib/layout/stack.svelte';
 
     let { texts, loop = false, delay = 1750, morphSpeed = 21 } = $props<{ 
         texts: string[], 
@@ -84,18 +83,16 @@
         }
     }
 
-
-
     onDestroy(() => {
         clearInterval(interval);
     
     });
 </script>
 
-<Stack class="morph-text">{ displayedText }</Stack>
+<div class="morph-text">{ displayedText }</div>
 
 <style>
-    :global(.morph-text) {
+    .morph-text {
         font-size: 0.9em;
         font-weight: bold;
     }

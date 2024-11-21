@@ -46,7 +46,7 @@
       expand ? 'expand' : '',
       fullWidth ? 'full-width' : '',
       fullHeight ? 'full-height' : '',
-      externalClass // Add external class
+      externalClass 
     ]
       .filter(Boolean)
       .join(' ')
@@ -58,13 +58,9 @@
     flex-direction: ${getDirection()};
     justify-content: ${getJustifyContent()};
     align-items: ${getAlignItems()};
-    ${externalStyle} // Add external style
+    ${externalStyle} 
   `);
 
-  $effect(() => {
-    console.log('Classes:', classes());
-    console.log('Styles:', styles());
-  });
 </script>
 
 <div class={classes()} style={styles()} {...restProps}>

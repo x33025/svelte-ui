@@ -8,10 +8,10 @@
     
 
 
-<Stack > 
+<Stack style="padding: 1.5em;"> 
   {@render SearchBar()}
 
-    <Stack  class="components-grid expand">
+    <div class="components-grid ">
       {#if $page.data.components}
       {#each $page.data.components as component}
 
@@ -20,14 +20,14 @@
 
       {/each}
       {/if}
-  </Stack>
+    </div>
 </Stack>
 
 {#snippet SearchBar()}
-<Stack full-width style=" --justify: center; --align: center; height: 375px;">
-    <spacer ></spacer>
+<Stack full-width center style="height: 375px;">
+   
   <input class="search-input regular-material"  type="text" placeholder="Search Components" />
-  <spacer ></spacer>
+
     </Stack>
 {/snippet}
 
@@ -55,7 +55,7 @@
 
     
    
-      .components-grid {
+      :global(.components-grid) {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1em;
@@ -63,7 +63,7 @@
       }
 
       @media (max-width: 600px) {
-        .components-grid {
+        :global(.components-grid) {
           display: flex;
           flex-direction: column;
         }
