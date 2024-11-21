@@ -15,12 +15,8 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$site: path.resolve('./src/site'),
-			$lib: path.resolve('./src/lib')
+			$lib: path.resolve('./src/lib'),
 		}
-	},
-
-	compilerOptions: {
-		customElement: true
 	}
 };
 

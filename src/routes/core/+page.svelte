@@ -21,7 +21,7 @@
     </Stack>
 </Stack>
 
-<divider></divider>
+
 
 <Stack>
        <h2 class="label"><span class="component-name">Text input</span> input[type="text"]</h2><input type="text" placeholder="Text input">
@@ -31,7 +31,7 @@
        <h2 class="label"><span class="component-name">Textarea</span></h2><textarea placeholder="Textarea"></textarea>
 </Stack>
 
-<divider></divider>
+
 
 <Stack>
     <h2>Padding Variables</h2>
