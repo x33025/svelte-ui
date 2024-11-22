@@ -6,27 +6,22 @@
     import DropdownMenu from '$lib/components/dropdown-menu/index.svelte';
     import { closeDropdown } from '$lib/components/dropdown-menu/store.js';
     import MorphText from '$lib/components/morph-text/index.svelte';
-
-
+    import { v4 as uuidv4 } from 'uuid';
 
     function handleRouteClick(route: Route) {
         goto(route.path);
         closeDropdown();
-
     }
 
     let buttonText = $derived($page.url.pathname.split('/')[1] || 'home');
 
     let componentText = $state('');
-    let componentId = $state('');
+    let componentId = $state(uuidv4());
 
     $effect(() => {
         const component = $page.data.components.find((component: any) => component.name === $page.url.pathname.split('/')[2]);
         componentText = component?.name;
-        componentId = component?.sha.slice(0, component.sha.length / 2);
     });
-    
-
 </script>
 
 <div class="stack subheadline search-container no-gap" style="--direction: row; --align: center; margin: 0.5em;">

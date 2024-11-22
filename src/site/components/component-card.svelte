@@ -27,7 +27,7 @@
     <Stack horizontal>
    
         <h2>{trainToTitleCase(component.name)}</h2>
- 
+        <div class="spacer"></div>
         <button onclick={() => goto(`/components/${component.name}`)} class="base-item">View</button>
     </Stack>
 

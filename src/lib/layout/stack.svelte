@@ -10,7 +10,7 @@
     expand = false,
     fullWidth = false,
     fullHeight = false,
-    children,
+    children = () => {}, // Provide a default empty function for children
     class: externalClass = '', // Accept external class
     style: externalStyle = '', // Accept additional styles
     gap = 1, // Interpret the second positional argument as the gap
@@ -59,5 +59,5 @@
 </script>
 
 <div class={classes} style={styles} {...restProps}>
-  {@render children()}
+  {@render children?.()}
 </div>

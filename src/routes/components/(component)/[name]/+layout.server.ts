@@ -1,66 +1,50 @@
-import { octokit } from '$site/server/octokit.js';
+import { readdirSync, statSync, readFileSync } from 'fs';
+import { resolve } from 'path';
 
 type DirectoryContent = {
-  sha?: string;
   name: string;
-  type: string;
+  type: 'file' | 'folder';
   path: string;
-  contents?: DirectoryContent[];
+  contents?: DirectoryContent[]; // For folders: nested directory contents
+  fileContent?: string; // For files: actual file content
 };
 
 export const load = async ({ params }) => {
-  const owner = 'x33025'; // Your GitHub username
-  const repo = 'svelte-ui'; // The repository name
-  const name = params.name; // Capture the component name from the route parameters
-  const path = `src/lib/components/${name}`; // Use the component name to construct the path
+  const { name } = params; // Capture the component name from the route parameters
+  const basePath = resolve('src/lib/components', name); // Construct the path for the component folder
 
-  const fetchDirectoryContents = async (path: string): Promise<DirectoryContent[]> => {
+  const fetchDirectoryContents = (directoryPath: string): DirectoryContent[] => {
     try {
-      const response = await octokit.repos.getContent({
-        owner,
-        repo,
-        path,
+      const entries = readdirSync(directoryPath);
+
+      return entries.map((entry) => {
+        const entryPath = resolve(directoryPath, entry);
+        const isDirectory = statSync(entryPath).isDirectory();
+
+        if (isDirectory) {
+          return {
+            name: entry,
+            type: 'folder',
+            path: entryPath,
+            contents: fetchDirectoryContents(entryPath), // Recursively fetch subdirectory contents
+          };
+        } else {
+          return {
+            name: entry,
+            type: 'file',
+            path: entryPath,
+            fileContent: readFileSync(entryPath, 'utf-8'), // Read file content
+          };
+        }
       });
 
-      if (Array.isArray(response.data)) {
-        // If it's a directory, recursively fetch each item
-        const directoryContents = await Promise.all(
-          response.data.map(async (item: any) => {
-            if (item.type === 'dir') {
-              // Recursively fetch subdirectory contents
-              return {
-                name: item.name,
-                type: 'folder',
-                path: item.path,
-                contents: await fetchDirectoryContents(item.path),
-              };
-            } else {
-              // Return file details
-              return {
-                sha: item.sha,
-                name: item.name,
-                type: item.type,
-                path: item.path,
-              };
-            }
-          })
-        );
-        return directoryContents;
-      } else {
-        // If it's a single file, return it directly
-        return [{
-          sha: response.data.sha,
-          name: response.data.name,
-          type: response.data.type,
-          path: response.data.path,
-        }];
-      }
+   
     } catch (error) {
-      console.error('Error fetching component content:', (error as Error).message);
+      console.error('Error reading directory:', error);
       return [];
     }
   };
 
-  const componentFiles = await fetchDirectoryContents(path);
-  return { componentFiles };
+  const fileContents = fetchDirectoryContents(basePath);
+  return { fileContents };
 };

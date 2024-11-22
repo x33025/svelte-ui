@@ -4,14 +4,18 @@
     import FileExplorer from "$lib/components/file-explorer/index.svelte";
     
     $effect(() => {
-        console.log($page.data.componentFiles);
+        
     })
+
+
+    function handleFileSelect(file: any) {
+        console.log(file.fileContent);
+    }
 </script>
 
 <Stack expand  gap={0.5} >
 
-
-    <FileExplorer structure={$page.data.componentFiles} />
+   <FileExplorer structure={$page.data.fileContents} onFileSelect={handleFileSelect} /> 
    
 </Stack>
 

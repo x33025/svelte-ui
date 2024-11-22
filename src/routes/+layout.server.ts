@@ -1,28 +1,32 @@
-import { octokit } from '$site/server/octokit.js';
+import { readdirSync, statSync } from 'fs';
+import { resolve } from 'path';
 
 export const load = async () => {
-  const owner = 'x33025'; // Your GitHub username
-  const repo = 'svelte-ui'; // The repository name
-  const path = 'src/lib/components'; // The directory path inside the repo
+  const componentsDir = resolve('src/lib/components'); // Resolve the path to your components folder
 
   try {
-    // Fetch the contents of the specified path
-    const response = await octokit.repos.getContent({
-      owner,
-      repo,
-      path,
-    });
+    // Read the components directory
+    const entries = readdirSync(componentsDir);
 
-    // Ensure response.data is an array before filtering
-    if (Array.isArray(response.data)) {
-      const components = response.data.filter((item: any) => item.type === 'dir');
-   //   console.log('Fetched component folders:', components.map((component: any) => ({ name: component.name, sha: component.sha }))); // Log the folder names and SHA
-      return { components };
-    }
+    // Filter to only include folders
+    const components = entries
+      .map((entry) => {
+        const entryPath = resolve(componentsDir, entry);
+        const isDirectory = statSync(entryPath).isDirectory();
+
+        if (isDirectory) {
+          return {
+            name: entry, // Folder name (component name)
+            path: entryPath, // Full path to the folder
+          };
+        }
+      })
+      .filter(Boolean); // Remove undefined entries
+   
+    // Return the components list
+    return { components };
   } catch (error) {
-    console.error('Error fetching component folders:', error);
+    console.error('Error fetching components:', error);
     return { error: error, components: [] };
   }
-
-  return { components: [] };
 };

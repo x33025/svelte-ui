@@ -8,7 +8,7 @@
     
 
 
-<Stack style="padding: 1.5em;"> 
+<Stack> 
   {@render SearchBar()}
 
     <div class="components-grid ">

@@ -1,26 +1,21 @@
 <script lang="ts">
     import { calendar, DaysOfWeek } from './index.svelte.js';
-    import YearSelector from './year-selector.svelte';
 
     let wasDraggingOutside = false;
     let isDragging = $state(false);
-
-
-    let overlayType = $state<"month" | "year" | null>(null);
-
-
- 
+    let showMonthOverlay = $state(false);
 
     function toggleMonthOverlay() {
-        overlayType = overlayType === "month" ? null : "month";
-    }
-
-    function toggleYearOverlay() {
-        overlayType = overlayType === "year" ? null : "year";
+        showMonthOverlay = !showMonthOverlay;
     }
 
     $effect(() => {
         window.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
     });
 
     function handleMouseDown(day: Date) {
@@ -58,19 +53,28 @@
         calendar.rangeStart = null;
         calendar.rangeEnd = null;
     }
+
+    function handleYearInputFocus() {
+        showMonthOverlay = false;
+    }
+
+    function handleClickOutside(event: MouseEvent) {
+        const calendarElement = document.querySelector('.calendar');
+        if (calendarElement && !calendarElement.contains(event.target as Node)) {
+            calendar.selectedDate = null;
+            calendar.rangeStart = null;
+            calendar.rangeEnd = null;
+        }
+    }
 </script>
 
 <div class="stack calendar no-gap border-highlight" style="--direction: column;">
     {@render Header()}
     <div class="z-stack">
         {@render Month()}
-        {#if overlayType === "month"}
+        {#if showMonthOverlay}
             <button class="overlay-content" onclick={toggleMonthOverlay}>
                 {@render MonthSelection()}
-            </button>
-        {:else if overlayType === "year"}
-            <button class="overlay-content" onclick={toggleYearOverlay}>
-                {@render YearSelection()}
             </button>
         {/if}
     </div>
@@ -80,19 +84,23 @@
 <div class="stack full-width calendar-header headline" style="--direction: row; --justify: space-around; --align: center;">
     <button onclick={calendar.prevMonth} aria-label="Previous month">&lt;</button>
     <div>
-        <button class="ui-button" class:ui-selected={overlayType === "month"} onclick={toggleMonthOverlay}>
+        <button class="ui-button" class:ui-selected={showMonthOverlay} onclick={toggleMonthOverlay}>
             {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), calendar.selectedMonth ?? calendar.today.getMonth(), 1).toLocaleString('default', { month: 'long' })}
         </button>
-        <button class="ui-button" class:ui-selected={overlayType === "year"} onclick={toggleYearOverlay}>
-            {calendar.selectedYear ?? calendar.today.getFullYear()}
-        </button>
+        {@render YearInput()}
     </div>
     <button onclick={calendar.nextMonth} aria-label="Next month">&gt;</button>
 </div>
 {/snippet}
 
-{#snippet YearSelection()}
-<YearSelector />
+{#snippet YearInput()}
+<input 
+    type="number" 
+    value={calendar.selectedYear ?? calendar.today.getFullYear()} 
+    oninput={(e) => calendar.selectedYear = +(e.target as HTMLInputElement).value} 
+    onfocus={handleYearInputFocus}
+    class="year-input ui-button"
+/>
 {/snippet}
 
 {#snippet MonthSelection()}
@@ -152,13 +160,37 @@
 </button>
 {/snippet}
 
-
 <style>
     .calendar {
         background-color: white;
         border-radius: 1em;
         color: black;
         position: relative;
+        display: inline-block;
+        max-width: fit-content;
+    }
+
+    .year-input {
+        width: 5em;
+   
+    }
+
+    .year-input:hover {
+        background-color: var(--gray-1);
+
+    }
+
+    .year-input:focus {
+        background-color: var(--blue);
+        color: white;
+
+    }
+
+    .calendar-header,
+    .days-of-week,
+    .days,
+    .month-selection {
+        width: auto;
     }
 
     .calendar-header {
