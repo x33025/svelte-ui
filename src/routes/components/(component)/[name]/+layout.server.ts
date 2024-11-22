@@ -30,7 +30,7 @@ export const load = async ({ params }) => {
               // Recursively fetch subdirectory contents
               return {
                 name: item.name,
-                type: item.type,
+                type: 'folder',
                 path: item.path,
                 contents: await fetchDirectoryContents(item.path),
               };

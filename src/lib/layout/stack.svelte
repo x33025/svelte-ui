@@ -1,4 +1,5 @@
 <script lang="ts">
+  // Destructure unnamed props (positional arguments)
   let {
     horizontal = false,
     leading = false,
@@ -11,58 +12,52 @@
     fullHeight = false,
     children,
     class: externalClass = '', // Accept external class
-    style: externalStyle = '', // Accept external style
+    style: externalStyle = '', // Accept additional styles
+    gap = 1, // Interpret the second positional argument as the gap
     ...restProps // Accept additional props
   } = $props();
 
-  const getDirection = () => (horizontal ? 'row' : 'column');
+  // Ensure gap is always a number
+  if (typeof gap !== 'number') {
+    throw new Error("The gap value must be a number.");
+  }
 
-  const getJustifyContent = () => {
-    if (leading) return 'flex-start';
-    if (trailing) return 'flex-end';
-    if (center) return 'center';
-    if (getDirection() === 'column') {
-      if (top) return 'flex-start';
-      if (bottom) return 'flex-end';
-    }
-    return 'flex-start';
-  };
-
-  const getAlignItems = () => {
+  // Determine CSS variable values
+  const direction = horizontal ? 'row' : 'column';
+  const justify = (() => {
     if (top) return 'flex-start';
     if (bottom) return 'flex-end';
     if (center) return 'center';
-    if (getDirection() === 'row') {
-      if (leading) return 'flex-start';
-      if (trailing) return 'flex-end';
-    }
-    return 'stretch';
-  };
+    return 'flex-start'; // Default to flex-start
+  })();
+  const align = (() => {
+    if (leading) return 'flex-start';
+    if (trailing) return 'flex-end';
+    if (center) return 'center';
+    return 'stretch'; // Default to stretch
+  })();
 
-  // Merge internal and external classes
-  let classes = $derived(() =>
-    [
-      'stack',
-      expand ? 'expand' : '',
-      fullWidth ? 'full-width' : '',
-      fullHeight ? 'full-height' : '',
-      externalClass 
-    ]
-      .filter(Boolean)
-      .join(' ')
-  );
+  // Combine classes for the component
+  let classes = [
+    'stack',
+    expand ? 'expand' : '',
+    fullWidth ? 'full-width' : '',
+    fullHeight ? 'full-height' : '',
+    externalClass,
+  ]
+    .filter(Boolean)
+    .join(' ');
 
-  // Merge internal and external styles
-  let styles = $derived(() => `
-    display: flex;
-    flex-direction: ${getDirection()};
-    justify-content: ${getJustifyContent()};
-    align-items: ${getAlignItems()};
-    ${externalStyle} 
-  `);
-
+  // Combine internal and external styles
+  let styles = `
+    --direction: ${direction};
+    --justify: ${justify};
+    --align: ${align};
+    --gap: ${gap}em; 
+    ${externalStyle}
+  `;
 </script>
 
-<div class={classes()} style={styles()} {...restProps}>
+<div class={classes} style={styles} {...restProps}>
   {@render children()}
 </div>

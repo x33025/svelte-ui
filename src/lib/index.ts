@@ -13,7 +13,7 @@ export { default as ScrollToTop } from './components/scroll-to-top/index.svelte'
 export { default as Calendar } from './components/calendar/index.svelte';
 export { default as LogTracker } from './components/log-tracker/index.svelte';
 export { default as MorphText } from './components/morph-text/index.svelte';
-
+export { default as FileExplorer } from './components/file-explorer/index.svelte';
 
 export { default as Stack } from './layout/stack.svelte';
 

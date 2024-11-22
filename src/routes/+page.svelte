@@ -5,11 +5,13 @@
 </svelte:head>
 
 <script lang="ts">
-    import { stagger, timeline } from 'motion';
+    import { animate, stagger } from 'motion';
     import { fade } from 'svelte/transition';
     import Copy from '$lib/icons/os/copy.svelte';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
+
+    
 
     import { bentoItems, type BentoItem } from '$site/stores/routes.js';
 
@@ -25,7 +27,7 @@
     }
 
     onMount(() => {
-        timeline([
+        animate([
             [ 
                 '.feature', 
                 {  opacity: [0, 1], scale: [0.7, 1] }, 
