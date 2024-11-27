@@ -1,50 +1,40 @@
-// import { readdirSync, statSync, readFileSync } from 'fs';
-// import { resolve } from 'path';
+import components from '$lib/components.json'; // Import the pre-generated components metadata
 
-// type DirectoryContent = {
-//   name: string;
-//   type: 'file' | 'folder';
-//   path: string;
-//   contents?: DirectoryContent[]; // For folders: nested directory contents
-//   fileContent?: string; // For files: actual file content
-// };
+type DirectoryContent = {
+  name: string;
+  type: 'file' | 'folder';
+  contents?: DirectoryContent[]; // For folders: nested directory contents
+  fileContent?: string; // For files: actual file content
+};
 
-// export const load = async ({ params }) => {
-//   const { name } = params; // Capture the component name from the route parameters
-//   const basePath = resolve('src/lib/components', name); // Construct the path for the component folder
+export const load = async ({ params }) => {
+  const { name } = params; // Capture the component name from the route parameters
 
-//   const fetchDirectoryContents = (directoryPath: string): DirectoryContent[] => {
-//     try {
-//       const entries = readdirSync(directoryPath);
+  // Recursive function to find a specific component in the metadata
+  const findComponent = (directory: DirectoryContent[], componentName: string): DirectoryContent | undefined => {
+    for (const item of directory) {
+      if (item.name === componentName && item.type === 'folder') {
+        return item; // Found the component folder
+      }
+      if (item.contents) {
+        const result = findComponent(item.contents, componentName); // Search in nested folders
+        if (result) return result;
+      }
+    }
+    return undefined; // Component not found
+  };
 
-//       return entries.map((entry) => {
-//         const entryPath = resolve(directoryPath, entry);
-//         const isDirectory = statSync(entryPath).isDirectory();
+  try {
+    // Find the component in the pre-generated metadata
+    const componentData = findComponent(components as DirectoryContent[], name);
 
-//         if (isDirectory) {
-//           return {
-//             name: entry,
-//             type: 'folder',
-//             path: entryPath,
-//             contents: fetchDirectoryContents(entryPath), // Recursively fetch subdirectory contents
-//           };
-//         } else {
-//           return {
-//             name: entry,
-//             type: 'file',
-//             path: entryPath,
-//             fileContent: readFileSync(entryPath, 'utf-8'), // Read file content
-//           };
-//         }
-//       });
+    if (!componentData) {
+      throw new Error(`Component "${name}" not found.`);
+    }
 
-   
-//     } catch (error) {
-//       console.error('Error reading directory:', error);
-//       return [];
-//     }
-//   };
-
-//   const fileContents = fetchDirectoryContents(basePath);
-//   return { fileContents };
-// };
+    return { component: componentData };
+  } catch (error) {
+    console.error('Error loading component data:', error);
+    return { error: error, component: null };
+  }
+};

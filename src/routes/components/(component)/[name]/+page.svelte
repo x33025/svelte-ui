@@ -15,7 +15,7 @@
 
 <Stack expand  gap={0.5} >
 
-   <FileExplorer structure={$page.data.fileContents} onFileSelect={handleFileSelect} /> 
+   <FileExplorer structure={$page.data.component.contents} onFileSelect={handleFileSelect} /> 
    
 </Stack>
 

@@ -9,6 +9,9 @@
   import Calendar from '$lib/components/calendar/index.svelte';
   import Stack from '$lib/layout/stack.svelte';
   import GradientBlob from '$site/workshop/GradientBlob.svelte';
+
+
+
   let content = $state('<p>Hello</p> <b>World</b> ');
 
   $effect(() => {
