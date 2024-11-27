@@ -3,6 +3,7 @@
 	"version": "0.0.5",
 	"scripts": {
 		"dev": "vite dev",
+		"build:components": "node scripts/generate-components-metadata.js",
 		"build": "vite build && npm run package",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
