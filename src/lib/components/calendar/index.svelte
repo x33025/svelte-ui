@@ -68,7 +68,7 @@
     }
 </script>
 
-<div class="stack calendar no-gap border-highlight" style="--direction: column;">
+<div class="stack calendar no-gap border-highlight" >
     {@render Header()}
     <div class="z-stack">
         {@render Month()}
@@ -81,10 +81,10 @@
 </div>
 
 {#snippet Header()}
-<div class="stack full-width calendar-header headline" style="--direction: row; --justify: space-around; --align: center;">
+<div class="stack full-width calendar-header subheadline" style="--direction: row; --justify: space-around; --align: center;">
     <button onclick={calendar.prevMonth} aria-label="Previous month">&lt;</button>
     <div>
-        <button class="ui-button" class:ui-selected={showMonthOverlay} onclick={toggleMonthOverlay}>
+        <button class="header-item" class:selected={!showMonthOverlay} onclick={toggleMonthOverlay}>
             {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), calendar.selectedMonth ?? calendar.today.getMonth(), 1).toLocaleString('default', { month: 'long' })}
         </button>
         {@render YearInput()}
@@ -97,19 +97,25 @@
 <input 
     type="number" 
     value={calendar.selectedYear ?? calendar.today.getFullYear()} 
-    oninput={(e) => calendar.selectedYear = +(e.target as HTMLInputElement).value} 
+    oninput={(e) => {
+        calendar.selectedYear = +(e.target as HTMLInputElement).value;
+        calendar.days = calendar.calculateDays();
+    }} 
     onfocus={handleYearInputFocus}
-    class="year-input ui-button"
+    class="year-input header-item"
 />
 {/snippet}
 
 {#snippet MonthSelection()}
-<div class="grid month-selection">
+<div class="grid month-grid month-selection">
     {#each Array.from({ length: 12 }, (_, i) => i) as month}
         <button 
-            class="ui-button"
+            class="border-highlight"
             class:selected={month === (calendar.selectedMonth ?? calendar.today.getMonth())} 
-            onclick={() => calendar.selectedMonth = month}
+            onclick={() => {
+                calendar.selectedMonth = month;
+                calendar.days = calendar.calculateDays();
+            }}
         >
             {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), month, 1).toLocaleString('default', { month: 'long' })}
         </button>
@@ -130,7 +136,7 @@
         {/each}
     </div>
 
-    <div class="grid full-width days" style="--direction: row; --justify: space-between; --align: center;">
+    <div class="grid day-grid full-width" style="--direction: row; --justify: space-between; --align: center;">
         {#each calendar.days as day}
             {@render Day(day)}
         {/each}
@@ -165,14 +171,23 @@
         background-color: white;
         border-radius: 1em;
         color: black;
-        position: relative;
-        display: inline-block;
         max-width: fit-content;
+    }
+
+
+    .header-item {
+        padding: var(--small-padding);
+        border-radius: 0.35em;
+        transition: background-color 0.3s ease;
+    }
+
+    .header-item:hover {
+        background-color: var(--gray-1);
+        color: black;
     }
 
     .year-input {
         width: 5em;
-   
     }
 
     .year-input:hover {
@@ -181,16 +196,9 @@
     }
 
     .year-input:focus {
-        background-color: var(--blue);
-        color: white;
+        background-color: var(--gray-1);
+        color: black;
 
-    }
-
-    .calendar-header,
-    .days-of-week,
-    .days,
-    .month-selection {
-        width: auto;
     }
 
     .calendar-header {
@@ -199,17 +207,51 @@
     }
 
     .days-of-week {
-        display: grid;
+
         grid-template-columns: repeat(7, 1fr);
         text-align: center;
         opacity: 0.8;
     }
 
-    .days {
-        display: grid;
+    .day-grid {
+        gap: 0.5em;
         grid-template-columns: repeat(7, 1fr);
         text-align: center;
     }
+
+
+
+    .month {
+        padding: 1em;
+    }
+
+    .inactive {
+        opacity: 0.5;
+    }
+
+    .month-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5em;
+    }
+
+    .month-selection button {
+        padding: var(--default-padding);
+        border-radius: 0.5em;
+
+    }
+
+    .month-selection button:hover {
+        background-color: var(--gray-1);
+       
+    }
+
+    .overlay-content {
+        background-color: white;
+        padding: 1em;
+        border-radius: 1em;
+        z-index: 101;
+    }
+
 
     .day {
         padding: 0.5em 0;
@@ -249,56 +291,5 @@
     .day.today {
        background-color: var(--red);
        color: white;
-    }
-
-    .month {
-        padding: 1em;
-    }
-
-    .inactive {
-        opacity: 0.5;
-    }
-
-    .ui-button {
-        padding: var(--small-padding);
-        border-radius: 0.35em;
-        transition: background-color 0.3s ease;
-    }
-
-    .ui-button:hover {
-        background-color: var(--gray-1);
-        color: black;
-    }
-
-    .ui-selected {
-        background-color: var(--blue);
-        color: white;
-        padding: var(--small-padding);
-    }
-
-    .month-selection {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5em;
-    }
-
-    .month-selection button,
-    .year-selection button {
-        padding: var(--default-padding);
-        border-radius: 0.5em;
-        cursor: pointer;
-        border: none;
-    }
-
-    .month-selection button:hover,
-    .year-selection button:hover {
-        background-color: var(--blue);
-        color: white;
-    }
-
-    .overlay-content {
-        background-color: white;
-        padding: 1em;
-        border-radius: 0.5em;
-        z-index: 101;
     }
 </style>

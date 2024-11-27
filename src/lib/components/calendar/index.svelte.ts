@@ -24,7 +24,7 @@ export class Calendar {
    
     startDayOfWeek: number = DaysOfWeek.Monday;
 
-    showAdjacentMonths: boolean = $state(true);
+    showAdjacentMonths: boolean = true;
 
     constructor() {
         this.today = new Date();
@@ -36,18 +36,25 @@ export class Calendar {
         
         this.rangeStart = null;
         this.rangeEnd = null;
+
+        this.calculateDays = this.calculateDays.bind(this);
+        this.prevMonth = this.prevMonth.bind(this);
+        this.nextMonth = this.nextMonth.bind(this);
     }
 
     calculateDays(): Date[] {
-        const firstDayOfMonth = new Date(this.today.getFullYear(), this.today.getMonth(), 1);
+        const year = this.selectedYear ?? this.today.getFullYear();
+        const month = this.selectedMonth ?? this.today.getMonth();
+        console.log(`Calculating days for Month: ${month}, Year: ${year}`);
+        const firstDayOfMonth = new Date(year, month, 1);
         const dayOfWeek = (firstDayOfMonth.getDay() - this.startDayOfWeek + 7) % 7;
-        const firstDate = new Date(this.today.getFullYear(), this.today.getMonth(), 1 - dayOfWeek);
+        const firstDate = new Date(year, month, 1 - dayOfWeek);
 
-        const daysInMonth = new Date(this.today.getFullYear(), this.today.getMonth() + 1, 0).getDate();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
         const totalDays = this.showAdjacentMonths ? 42 : daysInMonth;
 
         return Array.from({ length: totalDays }, (_, i) => this.createDay(firstDate, i))
-            .filter(day => this.showAdjacentMonths || (day.getMonth() === this.today.getMonth()));
+            .filter(day => this.showAdjacentMonths || (day.getMonth() === month));
     }
 
     createDay(startDate: Date, offset: number): Date {
@@ -71,7 +78,8 @@ export class Calendar {
     }
 
     isInactive(day: Date): boolean {
-        return day < this.firstDayOfMonth || day > this.lastDayOfMonth;
+        const month = this.selectedMonth ?? this.today.getMonth();
+        return day.getMonth() !== month;
     }
     isInRange(day: Date): boolean {
         if (!this.rangeStart || !this.rangeEnd) return false;
@@ -95,16 +103,29 @@ export class Calendar {
     }
 
     prevMonth() {
-        if (this.selectedDate === null) return;
+        if (this.selectedMonth === null) return;
 
-        this.selectedMonth = this.selectedMonth === null ? null : this.selectedMonth - 1;
-  
+        console.log(`Current Month: ${this.selectedMonth}, Year: ${this.selectedYear}`);
+        this.selectedMonth -= 1;
+        if (this.selectedMonth < 0) {
+            this.selectedMonth = 11;
+            this.selectedYear = this.selectedYear === null ? null : this.selectedYear - 1;
+        }
+        console.log(`Updated to Previous Month: ${this.selectedMonth}, Year: ${this.selectedYear}`);
+        this.days = this.calculateDays();
     }
 
     nextMonth() {
-        if (this.selectedDate === null) return;
+        if (this.selectedMonth === null) return;
 
-        this.selectedMonth = this.selectedMonth === null ? null : this.selectedMonth + 1;
+        console.log(`Current Month: ${this.selectedMonth}, Year: ${this.selectedYear}`);
+        this.selectedMonth += 1;
+        if (this.selectedMonth > 11) {
+            this.selectedMonth = 0;
+            this.selectedYear = this.selectedYear === null ? null : this.selectedYear + 1;
+        }
+        console.log(`Updated to Next Month: ${this.selectedMonth}, Year: ${this.selectedYear}`);
+        this.days = this.calculateDays();
     }
 
     get firstDayOfMonth(): Date {
