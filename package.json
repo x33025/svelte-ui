@@ -1,6 +1,6 @@
 {
 	"name": "@x33025/svelte-ui",
-	"version": "0.0.5",
+	"version": "1.0.6",
 	"scripts": {
 		"dev": "vite dev",
 		"build:components": "node scripts/generate-components-metadata.js",
@@ -60,8 +60,6 @@
 		"@vercel/speed-insights": "^1.1.0",
 		"dompurify": "^3.1.7",
 		"motion": "^11.11.17",
-		"three": "^0.170.0",
-		"three-gpu-pathtracer": "^0.0.23",
 		"uuid": "^11.0.3"
 	}
 }
