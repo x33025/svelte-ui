@@ -1,6 +1,6 @@
 {
 	"name": "@x33025/svelte-ui",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"scripts": {
 		"dev": "vite dev",
 		"build:components": "node scripts/generate-components-metadata.js",
