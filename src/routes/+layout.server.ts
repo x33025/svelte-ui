@@ -2,10 +2,17 @@ import components from '$lib/components.json'; // Import the pre-generated JSON 
 
 export const load = async () => {
   try {
-    // Return the components list from the pre-generated metadata
-    return { components };
+    // Fetch the package information from the npm registry
+    const response = await fetch('https://registry.npmjs.org/@x33025/svelte-ui');
+    const packageData = await response.json();
+
+    // Get the latest version
+    const latestVersion = packageData['dist-tags'].latest;
+
+    // Return the components list and the package version
+    return { components, latestVersion };
   } catch (error) {
-    console.error('Error loading components metadata:', error);
-    return { error: error, components: [] };
+    console.error('Error loading components metadata or package version:', error);
+    return { error: error, components: [], latestVersion: null };
   }
 };

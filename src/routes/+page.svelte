@@ -10,10 +10,11 @@
     import Copy from '$lib/icons/os/copy.svelte';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
+    import { Stack } from '$lib/index.js';
 
     
 
-    import { bentoItems, type BentoItem } from '$site/stores/routes.js';
+    import { heroItems, type HeroItem } from '$site/stores/routes.js';
 
     let copied = $state(false);
 
@@ -34,7 +35,7 @@
                 { duration: 0.4 }
             ],
             [ 
-                '.bento button:not(.feature .install-code-block )', 
+                'button:not(.feature .install-code-block )', 
                 { opacity: [0, 1] }, 
                 { duration: 0.4, delay: stagger(0.1), at: 0.2 }
             ]
@@ -42,27 +43,23 @@
     });    
 </script>
 
-<div class="bento" style="padding: 1em;">
-    {#each bentoItems as item}
-        {#if item.title === 'Svelte UI'}
-           
-                {@render Feature(item)}
-          
-        {:else}
-              {@render BentoItem(item)}
-     
-        {/if}
-    {/each}
-</div>
+<Stack center style="padding: 1em;">
+    {@render Feature(heroItems.find(item => item.title === 'Svelte UI')!)}
 
-{#snippet Feature(item: BentoItem)}
-    <div class="stack {item.gridArea}" style={` background: var(--gray-1); --justify: center; --align: center;  padding: 1.5em; border-radius: 1.3em; text-align: center;`}>
+    {#each heroItems.filter(item => item.title !== 'Svelte UI') as item}
+        {@render HeroCard(item)}
+    {/each}
+ 
+</Stack>
+
+{#snippet Feature(item: HeroItem)}
+    <Stack center class={item.gridArea}>
         <h1 class="feature-text">{item.title}</h1>
         <div class="spacer"></div>
-        <p style="font-size: 1.1em;">{@html item.description}</p>
+        <p style="font-size: 1.1em; overflow: wrap; white-space: normal;">{@html item.description}</p>
         <div class="spacer"></div>
         {@render InstallCode()}
-    </div>
+    </Stack>
 {/snippet}
 
 
@@ -77,11 +74,20 @@
     </button>
 {/snippet}
 
-{#snippet BentoItem(item: BentoItem)}
-    <button class="stack expand {item.gridArea} " style={`background: linear-gradient(to top left, rgba(var(${item.color}-rgb), 0.4), rgba(var(${item.color}-rgb), 0.85));`} onclick={() => item.path && goto(item.path)}>
+{#snippet HeroCard(item: HeroItem)}     
+    <button 
+        class="stack 0-0 expand" 
+        style={`background: linear-gradient(to top left, rgba(var(${item.color}-rgb), 0.4), rgba(var(${item.color}-rgb), 0.85));
+        width: 500px; aspect-ratio: 5/3;`} 
+        onclick={() => item.path && goto(item.path)}
+    >
+        <h2 style={`color: white; ${item.title === "Playground" ? "font: 'Kode Mono', monospace; color: black;" : ""}`}>
+            {item.title}
+        </h2>
 
-        <h2 style={`color: white; ${item.title === "Playground" ? "font: 'Kode Mono', monospace; color: black;" : ""}`}>{item.title}</h2>
-        <p style="color: white; font-weight: bold;">{item.description}</p>
+        <p style="color: white; font-weight: bold;">
+            {item.description}
+        </p>
     </button>
 {/snippet}
 
@@ -106,80 +112,34 @@
         -webkit-text-fill-color: transparent;
     }
 
-    .icon {
-        position: absolute;
-        top:    80px; /* Adjust positioning as needed */
-        right: 21px; /* Adjust positioning as needed */
 
-        rotate: 13deg;
-        z-index: -1; /* Place behind the content */
-    }
-
-    .bento {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 1em;
-    grid-template-areas:
-        "components components workshop core"
-        "layout feature feature core"
-        "layout style style comingSoon";
-}
-
-.workshop {
-    grid-area: workshop;
-}
-
-.components {
-    grid-area: components;
-}
-
-.core {
-    grid-area: core;
-}
-
-.layout {
-    grid-area: layout;
-}
-
-.feature {
-    grid-area: feature;
+:global(.feature) {
+    background: var(--gray-1);
+    padding: 1.5em;
+    margin: 5em 0;
+    border-radius: 1.3em;
+    text-align: center;
     will-change: opacity, transform;
     opacity: 0;
+    max-width: 60%;
 }
 
-.style {
-    grid-area: style;
-}
 
-.comingSoon {
-    grid-area: comingSoon;
-}
 
     @media (max-width: 600px) {
-        .bento {
-            grid-template-columns: 1fr; /* Single column for vertical stacking */
-            grid-template-rows: auto; /* Adjust rows automatically */
-            padding: 0em;
-            grid-template-areas:
-                "feature"
-                "components"
-                "core"
-                "layout"
-                "style"
-                "workshop"
-                "comingSoon";
+        :global(.feature) {
+            max-width: 100%;
         }
     }
 
-    .install-code-block {
+.install-code-block {
         display: flex;
         align-items: center;
         gap: 0.5em;
         
     }
 
-    .copied-message {
+   .copied-message {
         color: var(--green);
         font-weight: bold;
   

@@ -7,23 +7,23 @@ export interface Route {
     meta_description: string; // Metadata for SEO or additional context
 }
 
-export interface BentoItem {
+export interface HeroItem {
     gridArea: string; // Auto-incremented index for grid mapping
     title: string; // Display title
-    description: string; // Description for Bento display
+    description: string; // Description for HeroItem display
     color: string; // The color used for visual representation
     icon?: Component; // Optional icon for the item
-    path?: string; // Optional path, only for route-based Bento items
+    path?: string; // Optional path, only for route-based HeroItem items
 }
 
 export const routes: Route[] = [
     { path: '/', title: 'Home', meta_description: "Welcome to Svelte UI, a declarative library for building UI in Svelte." },
-    { path: '/workshop', title: 'Workshop', meta_description: 'Explore ongoing projects and experiments.' },
     { path: '/components', title: 'Components', meta_description: 'A library of reusable UI components.' },
     { path: '/core', title: 'Core', meta_description: 'Standardized CSS and HTML foundations.' },
     { path: '/layout', title: 'Layout', meta_description: 'Simple, flexible layout structures.' },
     { path: '/style', title: 'Style', meta_description: 'Predefined CSS styles, including colors, typography, and more.' },
-    { path: '/blog', title: 'Blog', meta_description: 'A blog about Svelte UI and web development.' }
+    { path: '/blog', title: 'Blog', meta_description: 'A blog about Svelte UI and web development.' },
+    { path: '/workshop', title: 'Workshop', meta_description: 'Explore ongoing projects and experiments.' }
 ];
 
 
@@ -38,7 +38,7 @@ if (isLocal) {
 // Extract the paths from the routes array to create a type
 type RoutePaths = typeof routes[number]['path'];
 
-const routeBentoProperties: Record<RoutePaths, { color: string; icon?: Component; description: string }> = {
+const heroItemProperties: Record<RoutePaths, { color: string; icon?: Component; description: string }> = {
     '/workshop': { color: '--indigo', icon: undefined, description: 'Explore ongoing projects and experiments.' },
     '/components': { color: '--blue', icon: undefined, description: 'A library of reusable UI components.' },
     '/core': { color: '--cyan', icon: undefined, description: 'Standardized CSS and HTML foundations.' },
@@ -47,19 +47,19 @@ const routeBentoProperties: Record<RoutePaths, { color: string; icon?: Component
     '/blog': { color: '--orange', icon: undefined, description: 'A blog about Svelte UI and web development.' }
 };
 
-export const bentoItems: BentoItem[] = [
-    // Add Bento items based on routes, excluding "Home"
+export const heroItems: HeroItem[] = [
+    // Add Hero items based on routes, excluding "Home"
     ...routes
         .filter(route => route.path !== '/') // Exclude Home
         .map(route => ({
             gridArea: route.path.substring(1) || 'home', // Map the path to a grid area (e.g., 'workshop', 'components')
             title: route.title,
-            description: routeBentoProperties[route.path as RoutePaths]?.description || route.meta_description,
-            color: routeBentoProperties[route.path as RoutePaths]?.color || '--blue',
-            icon: routeBentoProperties[route.path as RoutePaths]?.icon,
+            description: heroItemProperties[route.path as RoutePaths]?.description || route.meta_description,
+            color: heroItemProperties[route.path as RoutePaths]?.color || '--blue',
+            icon: heroItemProperties[route.path as RoutePaths]?.icon,
             path: route.path // Retain the path for navigation
         })),
-    // Add standalone Bento items (no path)
+    // Add standalone Hero items (no path)
     { 
         gridArea: 'feature', 
         title: 'Svelte UI', 

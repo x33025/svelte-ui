@@ -1,12 +1,7 @@
 <script lang="ts">
-
     import SearchBar from './SearchBar.svelte';
+    import { page } from '$app/stores';
 
-
- 
-   
-
-  
 
 </script>
 
@@ -16,7 +11,9 @@
 </nav>
 
 {#snippet StatusButton()}
-    <p class="status-text">Alpha v0.0.5</p>
+    <a href="https://www.npmjs.com/package/@x33025/svelte-ui" class="status-text" target="_blank" rel="noopener noreferrer">
+        Alpha v{$page.data.latestVersion}
+    </a>
 {/snippet}
 
 

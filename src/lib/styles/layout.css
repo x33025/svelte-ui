@@ -7,6 +7,62 @@
   align-items: var(--align, flex-start);
 }
 
+/* Stack Component */
+.stack {
+  display: flex;
+  gap: var(--gap, 1em);
+  flex-direction: var(--direction, column);
+  justify-content: var(--justify, flex-start);
+  align-items: var(--align, flex-start);
+}
+
+/* Utility Classes for Numeric Coordinates */
+.stack.\30-0 {
+  --justify: flex-start;
+  --align: flex-start;
+}
+
+.stack.\30-1 {
+  --justify: flex-start;
+  --align: center;
+}
+
+.stack.\30-2 {
+  --justify: flex-start;
+  --align: flex-end;
+}
+
+.stack.\31-0 {
+  --justify: center;
+  --align: flex-start;
+}
+
+.stack.\31-1 {
+  --justify: center;
+  --align: center;
+}
+
+.stack.\31-2 {
+  --justify: center;
+  --align: flex-end;
+}
+
+.stack.\32-0 {
+  --justify: flex-end;
+  --align: flex-start;
+}
+
+.stack.\32-1 {
+  --justify: flex-end;
+  --align: center;
+}
+
+.stack.\32-2 {
+  --justify: flex-end;
+  --align: flex-end;
+}
+
+
 .full-width {
   width: 100%;
 }
