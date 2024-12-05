@@ -1,12 +1,5 @@
-import components from '$lib/components.json'; // Import the pre-generated components metadata
-
-type DirectoryContent = {
-  name: string;
-  type: 'file' | 'folder';
-  contents?: DirectoryContent[]; // For folders: nested directory contents
-  fileContent?: string; // For files: actual file content
-};
-
+import components from '$lib/metadata/components.json'; // Import the pre-generated components metadata
+import type { DirectoryContent } from '$site/components/component-file-explorer/types.ts';
 export const load = async ({ params }) => {
   const { name } = params; // Capture the component name from the route parameters
 

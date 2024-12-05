@@ -26,16 +26,6 @@ export const routes: Route[] = [
     { path: '/workshop', title: 'Workshop', meta_description: 'Explore ongoing projects and experiments.' }
 ];
 
-
-// Check if window is defined to determine if the environment is local
-const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-
-// Conditionally add the JSONL Editor route if on a local machine
-if (isLocal) {
-    routes.push({ path: '/jsonl-editor', title: 'JSONL Editor', meta_description: 'A tool for editing JSONL files.' });
-}
-
-// Extract the paths from the routes array to create a type
 type RoutePaths = typeof routes[number]['path'];
 
 const heroItemProperties: Record<RoutePaths, { color: string; icon?: Component; description: string }> = {

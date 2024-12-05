@@ -1,28 +1,29 @@
 <script lang="ts">
-
+    import { page } from '$app/stores';
     import Stack from '$lib/layout/stack.svelte';
 
-let colors = ['var(--red)', 'var(--pink)', 'var(--orange)', 'var(--yellow)', 'var(--green)', 'var(--mint)', 'var(--teal)', 'var(--cyan)', 'var(--blue)', 'var(--indigo)', 'var(--purple)']
-let grays = ['var(--gray-1)', 'var(--gray-2)', 'var(--gray-3)', 'var(--gray-4)', 'var(--gray-5)', 'var(--gray-6)']
-let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter']
+    // Extract colors and grays from the imported JSON data
+    const colors = $page.data.colors.find((collection: any) => collection.colors)?.colors || {};
+    const grays = $page.data.colors.find((collection: any) => collection.grays)?.grays || {};
 
+    // Convert the objects to arrays of color names
+    const colorNames = Object.keys(colors);
+    const grayNames = Object.keys(grays);
+
+    let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter'];
 </script>
 
-
-
-
 <Stack style="padding: 1.5em;">
-
     <h2>Colors</h2>
     <div class="stack">
-    {#each colors as color}
-        {@render ColorCard(color)}
+        {#each colorNames as colorName}
+            {@render ColorCard(colorName)}
         {/each}
     </div>
     <h2>Grays</h2>
     <div class="stack">
-        {#each grays as gray}
-            {@render ColorCard(gray)}
+        {#each grayNames as grayName}
+            {@render ColorCard(grayName)}
         {/each}
     </div>
     <h2>Fonts</h2>
@@ -39,22 +40,15 @@ let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter']
     <p class="callout">This is a Callout</p>
     <p class="caption">This is a Caption</p>
 
-    <pre class="code-block">
-        <code>
-{"function example() {\n  return \"Hello World\";\n}"}
-        </code>
-    </pre>
+
 </Stack>
 
-
-{#snippet ColorCard(color: string)}
+{#snippet ColorCard(colorName: string)}
 <div class="stack" style="--direction: row; --align: center; --justify: center;">
-    <div class="color-card " style="background-color: {color}; "></div>
-    <p  style="color: {color}; font-weight: bold;">{color}</p>
+    <div class="color-card" style="background-color: var({colorName});"></div>
+    <p style="color: var({colorName}); font-weight: bold;">{colorName}</p>
 </div>
 {/snippet}
-
-
 
 {#snippet FontCard(font: string)}
 <div class="stack" style="--direction: column; --align: flex-start; --justify: center; --gap: 0.5em;">
@@ -65,9 +59,7 @@ let fonts = ['Kode Mono', 'Noto Serif', 'Sono', 'Nunito', 'Inter']
 </div>
 {/snippet}
 
-
 <style>
-
     .google-link {
         color: var(--gray-6);
         padding: var(--small-padding);

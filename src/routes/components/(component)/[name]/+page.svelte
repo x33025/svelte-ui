@@ -1,54 +1,72 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import Stack from "$lib/layout/stack.svelte";
-    import FileExplorer from "$lib/components/file-explorer/index.svelte";
+    import ComponentFileExplorer from "$site/components/component-file-explorer/index.svelte";
+    import CodeMirror from "$site/components/code-mirror/index.svelte";
     import { onMount } from 'svelte';
-
-    import Prism from 'prismjs';
-    // import 'prism-svelte'; // Svelte syntax highlighting support
+    import type { DirectoryContent } from "$site/components/component-file-explorer/types.ts";
   
-    let selectedFile: any = $state(null); // Selected file
-    let codeElement: HTMLElement | null = $state(null); // Reference for the code block
-    let language: string = $state('svelte'); // Default language for highlighting
+    // Selected file state and open folders state
+    let selectedFile: DirectoryContent | null = $state(null);
+    let openFolders = $state(new Set<string>());
   
-    // Update highlighting when the selected file changes
+    // Initialize the selected file on mount or when page data changes
     $effect(() => {
-      if (selectedFile?.fileContent && codeElement) {
-        Prism.highlightElement(codeElement);
+      const indexFile = $page.data.component.contents.find(
+        (item: any) => item.type === 'file' && item.name === 'index.svelte'
+      );
+      if (indexFile) {
+        selectedFile = indexFile;
       }
     });
   
-    function handleFileSelect(file: any) {
-      selectedFile = file;
-      language = 'svelte'; // Adjust the language dynamically if needed
+    function toggleFolder(folderName: string) {
+      if ($state.snapshot(openFolders).has(folderName)) {
+        openFolders.delete(folderName);
+      } else {
+        openFolders.add(folderName);
+      }
+      openFolders = new Set(openFolders); // Create a new Set to trigger reactivity
     }
   </script>
-
-
-<Stack expand gap={0.5}>
+  
+  <Stack  gap={0.5} class="component-editor" style="padding: 1em; margin: 1em;">
     <Stack horizontal>
       <!-- File Explorer for selecting files -->
-      <FileExplorer 
-        structure={$page.data.component.contents} 
-        onFileSelect={handleFileSelect} 
+      <ComponentFileExplorer
+        structure={$page.data.component.contents}
+        bind:selectedFile={selectedFile}
+        bind:openFolders={openFolders}
+        onToggleFolder={toggleFolder}
       />
-  
-      <!-- Display selected file content -->
-      <div>
-        <p>Selected File: {selectedFile?.name}</p>
-  
-        {#if selectedFile?.fileContent}
-          <pre 
-            class="stack full-width language-{language}" 
-            style="align-items: flex-start; justify-content: flex-start;">
-            <code 
-              bind:this={codeElement} 
-              class="language-{language}">
-              {selectedFile.fileContent}
-            </code>
-          </pre>
+      <div class="divider"></div>
+      <Stack >
+        {#if selectedFile?.name.endsWith('.svelte')}
+          <Stack horizontal>
+            <p>{"fields"}</p>
+            <p>{"style editor"}</p>
+          </Stack>
         {/if}
-      </div>
+        {#if selectedFile?.fileContent}
+          <CodeMirror code={selectedFile.fileContent} />
+        {/if}
+      </Stack>
+      <Stack >
+        <p>{"preview"}</p>
+        <p>{"docs"}</p>
+      </Stack>
     </Stack>
   </Stack>
+  
+  <style>
+    :global(.component-editor) {
+      border: 1px solid var(--gray-2);
+      border-radius: 0.5em;
+    }
+    .divider {
+      border-left: 1px solid var(--gray-3);
+      height: 100%;
+      width: 0;
+    }
+  </style>
   

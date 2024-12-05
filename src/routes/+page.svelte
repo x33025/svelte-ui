@@ -43,11 +43,11 @@
     });    
 </script>
 
-<Stack center style="padding: 1em;">
+<Stack expand center style="padding: 1em;">
     {@render Feature(heroItems.find(item => item.title === 'Svelte UI')!)}
 
-    {#each heroItems.filter(item => item.title !== 'Svelte UI') as item}
-        {@render HeroCard(item)}
+    {#each heroItems.filter(item => item.title !== 'Svelte UI') as item, index}
+        {@render HeroCard(item, index)}
     {/each}
  
 </Stack>
@@ -74,11 +74,10 @@
     </button>
 {/snippet}
 
-{#snippet HeroCard(item: HeroItem)}     
+{#snippet HeroCard(item: HeroItem, index: number)}     
     <button 
-        class="stack 0-0 expand" 
-        style={`background: linear-gradient(to top left, rgba(var(${item.color}-rgb), 0.4), rgba(var(${item.color}-rgb), 0.85));
-        width: 500px; aspect-ratio: 5/3;`} 
+        class="stack 0-0 expand hero-card" 
+        style={`background: linear-gradient(to top left, rgba(var(${item.color}-rgb), 0.4), rgba(var(${item.color}-rgb), 0.85)); align-self: ${index % 2 === 0 ? 'flex-start' : 'flex-end'}; transform: rotate(${index % 2 === 0 ? '-3deg' : '3deg'});`}
         onclick={() => item.path && goto(item.path)}
     >
         <h2 style={`color: white; ${item.title === "Playground" ? "font: 'Kode Mono', monospace; color: black;" : ""}`}>
@@ -100,7 +99,6 @@
         transition: box-shadow 0.3s ease; /* Smooth transition for the glow effect */
         position: relative; /* Position relative for absolute children */
         text-overflow: ellipsis;
-        overflow: wrap;
         white-space: normal; /* Allow text to wrap */
     }
 
@@ -138,6 +136,13 @@
         gap: 0.5em;
         
     }
+
+    .hero-card {
+        width: 500px; 
+        aspect-ratio: 5/3;
+        margin: 1.5em;
+    }
+
 
    .copied-message {
         color: var(--green);

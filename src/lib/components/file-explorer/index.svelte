@@ -1,5 +1,6 @@
 <script lang="ts">
     import FileExplorer from "./index.svelte";
+    
     type StructureItem = {
         type: 'folder' | 'file';
         name: string;
@@ -38,8 +39,10 @@
         openFolders = new Set(openFolders);
     }
 
-    // Function to handle file selection
+    let selectedFile = $state<StructureItem | null>(null);
+
     function selectFile(file: StructureItem) {
+        selectedFile = file;
         onFileSelect(file);
     }
 </script>
@@ -57,7 +60,13 @@
                 </div>
             {/if}
         {:else if item.type === 'file'}
-            <button class="file" onclick={() => selectFile(item)}>📄 {item.name}</button>
+            <button 
+                class="file" 
+                onclick={() => selectFile(item)}
+                class:selected={selectedFile === item}
+            >
+                📄 {item.name}
+            </button>
         {/if}
     {/each}
 </div>
@@ -73,6 +82,16 @@
 
     .file {
         cursor: pointer;
+        padding: var(--small-padding);
+        border-radius: 0.35em;
+    }
+
+    .file:hover {
+        background-color: var(--gray-1);
+    }
+
+    .file.selected {
+        background-color: var(--gray-2);
     }
 
     .contents {

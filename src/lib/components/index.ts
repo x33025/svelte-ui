@@ -12,7 +12,7 @@ export { default as ScrollToTop } from './scroll-to-top/index.svelte';
 export { default as Calendar } from './calendar/index.svelte';
 export { default as LogTracker } from './log-tracker/index.svelte';
 export { default as MorphText } from './morph-text/index.svelte';
-export { default as FileExplorer } from './file-explorer/index.svelte';
+
 
 
 export { closeDropdown } from './dropdown-menu/store.js';
