@@ -64,7 +64,7 @@
 </button>
 
 {#if isOpen}
-    <div transition:fade={{ duration: 96 }} class="stack scrollable menu-content shadow-default glass" style="--align: flex-start; --justify: flex-start; --gap: 0.25em; text-align: {alignment};">
+    <div transition:fade={{ duration: 96 }} class="stack 0-0 menu-content shadow-default" style="--direction: column; --gap: 0.25em; text-align: {alignment};">
         {@render content()}
     </div>
 {/if}
@@ -73,25 +73,25 @@
 <style>
   .dropdown-menu {
     position: relative;
+    overflow: visible;
   }
-
 
   .menu-content {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 0.75em;
-
-    position: absolute; /* Position absolutely within the container */
-    z-index: 9999;
+    position: absolute;
+    z-index: 9999 !important;
     display: flex;
     flex-direction: column;
     padding: 0.25em;
     margin-top: 0.35em;
-    max-height: 25em;
-    top: 100%; /* Position directly below the button */
+    max-height: 400px;
+    overflow-y: auto;
+    top: 100%;
     right: auto;
-    transform: translateY(10px); /* Adjust for any additional spacing */
-    transform: translateX(-1em); /* Adjust for any additional spacing */
+    transform: translateY(10px);
+    transform: translateX(-10px);
   }
 
   .menu-content[style*="text-align: right;"] {

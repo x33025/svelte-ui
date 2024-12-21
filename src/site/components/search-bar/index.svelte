@@ -7,11 +7,14 @@
     import { closeDropdown } from '$lib/components/dropdown-menu/store.js';
     import MorphText from '$lib/components/morph-text/index.svelte';
     import { v4 as uuidv4 } from 'uuid';
+    import Stack from '$lib/layout/stack.svelte';
 
     function handleRouteClick(route: Route) {
         goto(route.path);
         closeDropdown();
     }
+
+    $inspect($page.data.components);
 
     let buttonText = $derived($page.url.pathname.split('/')[1] || 'home');
 
@@ -24,7 +27,7 @@
     });
 </script>
 
-<div class="stack subheadline search-container no-gap" style="--direction: row; --align: center; margin: 0.5em;">
+<Stack horizontal gap={0} class="subheadline search-container" style="margin: 0.5em;">
     <span class="static-slash">/</span>
     <DropdownMenu alignment="left">
         {#snippet button()}
@@ -44,7 +47,7 @@
     {/if}
 
 
-</div>
+</Stack>
 
 {#snippet ComponentDropdown()}
 <span class="static-slash">/</span>
@@ -98,7 +101,7 @@
         z-index: 105;
     }
 
-    .search-container {
+    :global(.search-container) {
         position: relative;
         font-family: 'Kode Mono';
         margin-right: 1em;

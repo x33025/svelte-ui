@@ -30,7 +30,7 @@
     }
   </script>
   
-  <Stack  gap={0.5} class="component-editor" style="padding: 1em; margin: 1em;">
+  <Stack expand gap={0.5} class="component-editor" style="padding: 1em; margin: 1em;">
     <Stack horizontal>
       <!-- File Explorer for selecting files -->
       <ComponentFileExplorer

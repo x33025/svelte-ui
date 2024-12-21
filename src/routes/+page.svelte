@@ -10,7 +10,7 @@
     import Copy from '$lib/icons/os/copy.svelte';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
-    import { Stack } from '$lib/index.js';
+    import { DropdownMenu, Stack } from '$lib/index.js';
 
     
 
@@ -43,13 +43,14 @@
     });    
 </script>
 
-<Stack expand center style="padding: 1em;">
+<Stack expand center style="padding: 1.5em;">
     {@render Feature(heroItems.find(item => item.title === 'Svelte UI')!)}
 
-    {#each heroItems.filter(item => item.title !== 'Svelte UI') as item, index}
-        {@render HeroCard(item, index)}
-    {/each}
- 
+    <div class="hero-grid">
+        {#each heroItems.filter(item => item.title !== 'Svelte UI') as item, index}
+            {@render HeroCard(item, index)}
+        {/each}
+    </div>
 </Stack>
 
 {#snippet Feature(item: HeroItem)}
@@ -58,7 +59,7 @@
         <div class="spacer"></div>
         <p style="font-size: 1.1em; overflow: wrap; white-space: normal;">{@html item.description}</p>
         <div class="spacer"></div>
-        {@render InstallCode()}
+        <!-- {@render InstallCode()} -->
     </Stack>
 {/snippet}
 
@@ -77,7 +78,7 @@
 {#snippet HeroCard(item: HeroItem, index: number)}     
     <button 
         class="stack 0-0 expand hero-card" 
-        style={`background: linear-gradient(to top left, rgba(var(${item.color}-rgb), 0.4), rgba(var(${item.color}-rgb), 0.85)); align-self: ${index % 2 === 0 ? 'flex-start' : 'flex-end'}; transform: rotate(${index % 2 === 0 ? '-3deg' : '3deg'});`}
+        style={`background: linear-gradient(to top left, rgba(var(${item.color}-rgb), 0.4), rgba(var(${item.color}-rgb), 0.85)); align-self: ${index % 2 === 0 ? 'flex-start' : 'flex-end'};`}
         onclick={() => item.path && goto(item.path)}
     >
         <h2 style={`color: white; ${item.title === "Playground" ? "font: 'Kode Mono', monospace; color: black;" : ""}`}>
@@ -124,7 +125,7 @@
 
 
 
-    @media (max-width: 600px) {
+    @media (max-width: 1000px) {
         :global(.feature) {
             max-width: 100%;
         }
@@ -137,12 +138,29 @@
         
     }
 
-    .hero-card {
-        width: 500px; 
-        aspect-ratio: 5/3;
-        margin: 1.5em;
+    .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5em;
     }
 
+    .hero-card {
+        width: 100%; /* Adjust to fit within the grid cell */
+        aspect-ratio: 5/3;
+        margin: 0; /* Remove margin to fit grid layout */
+    }
+
+    @media (max-width: 1000px) {
+        .hero-grid {
+            grid-template-columns: repeat(2, 1fr); /* Double column layout */
+        }
+    }
+
+    @media (max-width: 600px) {
+        .hero-grid {
+            grid-template-columns: 1fr; /* Single column on mobile */
+        }
+    }
 
    .copied-message {
         color: var(--green);

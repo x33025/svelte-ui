@@ -1,23 +1,20 @@
 <script lang="ts">
-    import SearchBar from './SearchBar.svelte';
+    import SearchBar from '$site/components/search-bar/index.svelte';
     import { page } from '$app/stores';
 
 
 </script>
 
-<nav class="stack navigation-bar full-width regular-material" style="--direction: row; --align: center; --justify: space-between; ">
+<div class="stack navigation-bar full-width regular-material" style="--direction: row; --align: center; --justify: space-between; ">
     <SearchBar />
     {@render StatusButton()}
-</nav>
+</div>
 
 {#snippet StatusButton()}
     <a href="https://www.npmjs.com/package/@x33025/svelte-ui" class="status-text" target="_blank" rel="noopener noreferrer">
         Alpha v{$page.data.latestVersion}
     </a>
 {/snippet}
-
-
-
 
 
 <style>
@@ -44,9 +41,8 @@
         top: 0;
         padding: var(--default-padding);
         border-bottom: 1px solid var(--gray-2);
-
-
         z-index: 100;
+        overflow: visible;
     }
 
     @media (max-width: 600px) { /* Adjust the max-width as needed for your mobile breakpoint */
