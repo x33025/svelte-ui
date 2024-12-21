@@ -5,7 +5,6 @@
 
   import LogTracker from '$lib/components/log-tracker/index.svelte';
   import { addLog } from '$lib/index.js';
-  import TextEditor from '$lib/components/text-editor/index.svelte';
   import Calendar from '$lib/components/calendar/index.svelte';
   import Stack from '$lib/layout/stack.svelte';
 
@@ -20,10 +19,8 @@
 
   </script>
   
-  <Stack expand >
-    <!-- <TextEditor bind:content /> -->
-    <!-- <ComponentRenderer code={$page.data.code}/>
-   -->
+  <Stack expand padding={1.5}>
+
 
     <Calendar />
 
@@ -32,7 +29,3 @@
   <LogTracker />
 
 
-  <style>
-
-  </style>
-  

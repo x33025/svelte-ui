@@ -14,12 +14,20 @@
     class: externalClass = '', // Accept external class
     style: externalStyle = '', // Accept additional styles
     gap = 1, // Interpret the second positional argument as the gap
+    padding = 0, // Default padding as a number
+    margin = 0, // Default margin as a number
     ...restProps // Accept additional props
   } = $props();
 
-  // Ensure gap is always a number
+  // Ensure gap, padding, and margin are always numbers
   if (typeof gap !== 'number') {
     throw new Error("The gap value must be a number.");
+  }
+  if (typeof padding !== 'number') {
+    throw new Error("The padding value must be a number.");
+  }
+  if (typeof margin !== 'number') {
+    throw new Error("The margin value must be a number.");
   }
 
   // Determine CSS variable values
@@ -54,6 +62,8 @@
     --justify: ${justify};
     --align: ${align};
     --gap: ${gap}em; 
+    padding: ${padding}em;
+    margin: ${margin}em;
     ${externalStyle}
   `;
 </script>

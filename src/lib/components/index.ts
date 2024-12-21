@@ -14,8 +14,6 @@ export { default as LogTracker } from './log-tracker/index.svelte';
 export { default as MorphText } from './morph-text/index.svelte';
 
 
-
-export { closeDropdown } from './dropdown-menu/store.js';
 export { openContextMenu, closeContextMenu } from './context-menu/store.js';
 export { openModal, closeModal } from './modal/store.js';
 export { openSidebar, closeSidebar } from './sidebar/store.js';

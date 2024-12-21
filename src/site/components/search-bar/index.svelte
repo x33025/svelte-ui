@@ -3,8 +3,7 @@
     import { routes, type Route } from '$site/stores/routes.js';
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
-    import DropdownMenu from '$lib/components/dropdown-menu/index.svelte';
-    import { closeDropdown } from '$lib/components/dropdown-menu/store.js';
+    import DropdownMenu, { closeDropdown } from '$lib/components/dropdown-menu/index.svelte';
     import MorphText from '$lib/components/morph-text/index.svelte';
     import { v4 as uuidv4 } from 'uuid';
     import Stack from '$lib/layout/stack.svelte';

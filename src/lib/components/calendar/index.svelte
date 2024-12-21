@@ -1,13 +1,11 @@
+
 <script lang="ts">
     import { calendar, DaysOfWeek } from './index.svelte.js';
-
+    import DropdownMenu, { closeDropdown } from '$lib/components/dropdown-menu/index.svelte';
+ 
     let wasDraggingOutside = false;
     let isDragging = $state(false);
-    let showMonthOverlay = $state(false);
 
-    function toggleMonthOverlay() {
-        showMonthOverlay = !showMonthOverlay;
-    }
 
     $effect(() => {
         window.addEventListener('mouseup', handleMouseUp);
@@ -54,9 +52,6 @@
         calendar.rangeEnd = null;
     }
 
-    function handleYearInputFocus() {
-        showMonthOverlay = false;
-    }
 
     function handleClickOutside(event: MouseEvent) {
         const calendarElement = document.querySelector('.calendar');
@@ -70,25 +65,42 @@
 
 <div class="stack calendar no-gap border-highlight" >
     {@render Header()}
-    <div class="z-stack">
-        {@render Month()}
-        {#if showMonthOverlay}
-            <button class="overlay-content" onclick={toggleMonthOverlay}>
-                {@render MonthSelection()}
-            </button>
-        {/if}
-    </div>
+  
+    {@render Month()}
+
 </div>
 
 {#snippet Header()}
 <div class="stack full-width calendar-header subheadline" style="--direction: row; --justify: space-around; --align: center;">
     <button onclick={calendar.prevMonth} aria-label="Previous month">&lt;</button>
-    <div>
-        <button class="header-item" class:selected={!showMonthOverlay} onclick={toggleMonthOverlay}>
-            {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), calendar.selectedMonth ?? calendar.today.getMonth(), 1).toLocaleString('default', { month: 'long' })}
-        </button>
+ 
+        <DropdownMenu alignment="left">
+            {#snippet button()}
+          
+                {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), calendar.selectedMonth ?? calendar.today.getMonth(), 1).toLocaleString('default', { month: 'long' })}
+      
+            {/snippet}
+
+            {#snippet content()}
+                <div class="grid month-grid month-selection">
+                    {#each Array.from({ length: 12 }, (_, i) => i) as month}
+                        <button 
+                            class="callout border-highlight"
+                            class:selected={month === (calendar.selectedMonth ?? calendar.today.getMonth())} 
+                            onclick={() => {
+                                calendar.selectedMonth = month;
+                                calendar.days = calendar.calculateDays();
+                                closeDropdown();
+                            }}
+                        >
+                            {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), month, 1).toLocaleString('default', { month: 'long' })}
+                        </button>
+                    {/each}
+                </div>
+            {/snippet}
+        </DropdownMenu>
         {@render YearInput()}
-    </div>
+
     <button onclick={calendar.nextMonth} aria-label="Next month">&gt;</button>
 </div>
 {/snippet}
@@ -101,26 +113,8 @@
         calendar.selectedYear = +(e.target as HTMLInputElement).value;
         calendar.days = calendar.calculateDays();
     }} 
-    onfocus={handleYearInputFocus}
     class="year-input header-item"
 />
-{/snippet}
-
-{#snippet MonthSelection()}
-<div class="grid month-grid month-selection">
-    {#each Array.from({ length: 12 }, (_, i) => i) as month}
-        <button 
-            class="border-highlight"
-            class:selected={month === (calendar.selectedMonth ?? calendar.today.getMonth())} 
-            onclick={() => {
-                calendar.selectedMonth = month;
-                calendar.days = calendar.calculateDays();
-            }}
-        >
-            {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), month, 1).toLocaleString('default', { month: 'long' })}
-        </button>
-    {/each}
-</div>
 {/snippet}
 
 {#snippet Month()}
@@ -245,14 +239,6 @@
        
     }
 
-    .overlay-content {
-        background-color: white;
-        padding: 1em;
-        border-radius: 1em;
-        z-index: 101;
-    }
-
-
     .day {
         padding: 0.5em 0;
         border-radius: 50%;
@@ -291,5 +277,9 @@
     .day.today {
        background-color: var(--red);
        color: white;
+    }
+    .month-selection .selected {
+        background-color: var(--gray-1);
+        font-weight: bold;
     }
 </style>

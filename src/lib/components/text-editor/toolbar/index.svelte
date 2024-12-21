@@ -1,6 +1,5 @@
 <script lang="ts">
-    import DropdownMenu from "$lib/components/dropdown-menu/index.svelte";
-    import { closeDropdown } from "$lib/index.js";
+    import DropdownMenu, { closeDropdown } from "$lib/components/dropdown-menu/index.svelte";
     import Stack from "$lib/layout/stack.svelte";
 
     function handleUlist() {

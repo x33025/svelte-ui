@@ -73,7 +73,11 @@ export class Calendar {
         if (!this.selectedDate) {
             return false;
         } else {
-            return day.toDateString() === this.selectedDate.toDateString();
+            const isSelected = day.toDateString() === this.selectedDate.toDateString();
+            if (isSelected) {
+                console.log(`Selected Date: ${day.toDateString()}`);
+            }
+            return isSelected;
         }
     }
 
@@ -94,12 +98,20 @@ export class Calendar {
 
     isRangeStart(day: Date): boolean {
         if (this.rangeStart === null) return false;
-        return day.toDateString() === this.rangeStart.toDateString();
+        const isRangeStart = day.toDateString() === this.rangeStart.toDateString();
+        if (isRangeStart) {
+            console.log(`Range Start Date: ${day.toDateString()}`);
+        }
+        return isRangeStart;
     }
 
     isRangeEnd(day: Date): boolean {
         if (this.rangeEnd === null) return false;
-        return day.toDateString() === this.rangeEnd.toDateString();
+        const isRangeEnd = day.toDateString() === this.rangeEnd.toDateString();
+        if (isRangeEnd) {
+            console.log(`Range End Date: ${day.toDateString()}`);
+        }
+        return isRangeEnd;
     }
 
     prevMonth() {

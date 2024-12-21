@@ -43,7 +43,7 @@
     });    
 </script>
 
-<Stack expand center style="padding: 1.5em;">
+<Stack expand center padding={1.5}>
     {@render Feature(heroItems.find(item => item.title === 'Svelte UI')!)}
 
     <div class="hero-grid">

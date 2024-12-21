@@ -1,7 +1,17 @@
+<script lang="ts" module>
+
+  let openDropdownId = $state<string | null>(null);
+
+  export const closeDropdown = () => openDropdownId = null;
+  export const openDropdown = (id: string) => openDropdownId = id;
+  export const toggleDropdown = (id: string) => {
+    openDropdownId = openDropdownId === id ? null : id;
+  };
+</script>
+
 <script lang="ts">
   import { onMount } from 'svelte';
   import type { Snippet } from 'svelte';
-  import { openDropdownId, openDropdown, closeDropdown } from './store.js';
   import { v4 as uuidv4 } from 'uuid';
   import { fade } from 'svelte/transition';
 
@@ -12,12 +22,12 @@
   }
 
   let { button, content, alignment = 'right' }: Props = $props();
-  
+
   let isOpen = $state(false);
   let id: string = uuidv4();
 
-  let unsubscribe = openDropdownId.subscribe(value => {
-    isOpen = value === id;
+  $effect(() => {
+    isOpen = openDropdownId === id;
   });
 
   function toggleMenu(event: MouseEvent) {
@@ -26,7 +36,6 @@
       closeDropdown();
     } else {
       openDropdown(id);
-      // No need to call positionMenu if not dynamically positioning
     }
   }
 
@@ -38,36 +47,34 @@
   }
 
   $effect(() => {
-    if (typeof document !== 'undefined') {
-      if (isOpen) {
-        document.addEventListener('click', handleClickOutside, true);
-      } else {
-        document.removeEventListener('click', handleClickOutside, true);
-      }
+    if (isOpen) {
+      document.addEventListener('click', handleClickOutside, true);
+    } else {
+      document.removeEventListener('click', handleClickOutside, true);
     }
   });
 
   onMount(() => {
-    if (typeof document !== 'undefined') {
-      return () => {
-        document.removeEventListener('click', handleClickOutside, true);
-        unsubscribe();
-      };
-    }
-    return unsubscribe;
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
   });
 </script>
 
-<div class="dropdown-menu"> 
+<div class="dropdown-menu">
   <button class={`menu-button-${id}`} onclick={toggleMenu}>
-      {@render button()}
-</button>
+    {@render button()}
+  </button>
 
-{#if isOpen}
-    <div transition:fade={{ duration: 96 }} class="stack 0-0 menu-content shadow-default" style="--direction: column; --gap: 0.25em; text-align: {alignment};">
-        {@render content()}
+  {#if isOpen}
+    <div
+      transition:fade={{ duration: 96 }}
+      class="stack 0-0 menu-content shadow-default"
+      style="--direction: column; --gap: 0.25em; text-align: {alignment};"
+    >
+      {@render content()}
     </div>
-{/if}
+  {/if}
 </div>
 
 <style>
@@ -94,12 +101,12 @@
     transform: translateX(-10px);
   }
 
-  .menu-content[style*="text-align: right;"] {
+  .menu-content[style*='text-align: right;'] {
     left: auto;
     right: 0;
   }
 
-  .menu-content[style*="text-align: center;"] {
+  .menu-content[style*='text-align: center;'] {
     left: 50%;
     transform: translateX(-50%) translateY(0.1em);
   }
