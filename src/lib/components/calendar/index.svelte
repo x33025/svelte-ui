@@ -76,8 +76,9 @@
  
         <DropdownMenu alignment="left">
             {#snippet button()}
-          
-                {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), calendar.selectedMonth ?? calendar.today.getMonth(), 1).toLocaleString('default', { month: 'long' })}
+                <div class="header-item">
+                    {new Date(calendar.selectedYear ?? calendar.today.getFullYear(), calendar.selectedMonth ?? calendar.today.getMonth(), 1).toLocaleString('default', { month: 'long' })}
+                </div>
       
             {/snippet}
 
